@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.kianwei.insuranceai.document.dto.DocumentUploadResponse;
 import com.kianwei.insuranceai.document.entity.DocumentStatus;
-import com.kianwei.insuranceai.document.service.InsuranceDocumentService;
+import com.kianwei.insuranceai.orchestrator.DocumentOrchestratorService;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 class DocumentControllerTest {
 
     @Mock
-    private InsuranceDocumentService insuranceDocumentService;
+    private DocumentOrchestratorService documentOrchestratorService;
 
     @InjectMocks
     private DocumentController documentController;
@@ -51,7 +51,7 @@ class DocumentControllerTest {
             .uploadedAt(LocalDateTime.of(2026, 3, 28, 15, 30))
             .build();
 
-        when(insuranceDocumentService.buildUploadStubResponse(eq("POLICY"), eq(file))).thenReturn(response);
+        when(documentOrchestratorService.handleUpload(eq("POLICY"), eq(file))).thenReturn(response);
 
         mockMvc.perform(multipart("/documents/upload")
                 .file(file)
@@ -63,7 +63,7 @@ class DocumentControllerTest {
             .andExpect(jsonPath("$.data.sourceFilename").value("policy.pdf"))
             .andExpect(jsonPath("$.data.status").value("UPLOADED"));
 
-        verify(insuranceDocumentService).buildUploadStubResponse("POLICY", file);
+        verify(documentOrchestratorService).handleUpload("POLICY", file);
     }
 
     @Test
