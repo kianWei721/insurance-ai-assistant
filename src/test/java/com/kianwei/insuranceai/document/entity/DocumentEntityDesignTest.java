@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.util.Arrays;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -89,13 +90,14 @@ class DocumentEntityDesignTest {
                 "createdAt",
                 "updatedAt",
                 "deleted"));
+        assertEquals(byte[].class, InsuranceChunk.class.getDeclaredField("embedding").getType());
     }
 
     @Test
     void documentStatusSupportsExpectedPhaseOneStates() {
         assertEquals(
-            List.of("UPLOADED", "PARSED", "CHUNKED", "FAILED"),
-            List.of(DocumentStatus.values()).stream().map(DocumentStatus::name).toList());
+            List.of(DocumentStatus.UPLOADED, DocumentStatus.PARSED, DocumentStatus.CHUNKED, DocumentStatus.FAILED),
+            List.of(DocumentStatus.values()));
     }
 
     private static void assertTableName(Class<?> type, String expectedValue) {
@@ -110,7 +112,7 @@ class DocumentEntityDesignTest {
     }
 
     private static void assertFieldNames(Class<?> type, List<String> expectedFields) {
-        List<String> actualFields = List.of(type.getDeclaredFields()).stream().map(Field::getName).toList();
+        List<String> actualFields = Arrays.stream(type.getDeclaredFields()).map(Field::getName).toList();
         assertEquals(Set.copyOf(expectedFields), Set.copyOf(actualFields));
         assertEquals(expectedFields.size(), actualFields.size());
     }

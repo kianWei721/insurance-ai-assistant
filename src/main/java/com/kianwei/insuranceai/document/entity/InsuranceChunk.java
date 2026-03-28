@@ -39,7 +39,7 @@ public class InsuranceChunk {
     private Integer tokenCount;
 
     @TableField("embedding")
-    private String embedding;
+    private byte[] embedding;
 
     @TableField("created_at")
     private LocalDateTime createdAt;
