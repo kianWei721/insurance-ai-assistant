@@ -44,11 +44,12 @@ class DocumentEntityDesignTest {
                 "fileSizeBytes",
                 "pageCount",
                 "checksumSha256",
-                "processingStatus",
+                "status",
                 "uploadedAt",
                 "createdAt",
                 "updatedAt",
                 "deleted"));
+        assertEquals(DocumentStatus.class, InsuranceDocument.class.getDeclaredField("status").getType());
     }
 
     @Test
@@ -60,7 +61,7 @@ class DocumentEntityDesignTest {
             List.of(
                 "id",
                 "documentId",
-                "pageNumber",
+                "pageNo",
                 "storageKey",
                 "width",
                 "height",
@@ -80,14 +81,21 @@ class DocumentEntityDesignTest {
                 "id",
                 "documentId",
                 "pageId",
+                "pageNo",
                 "chunkIndex",
                 "content",
-                "charStart",
-                "charEnd",
                 "tokenCount",
+                "embedding",
                 "createdAt",
                 "updatedAt",
                 "deleted"));
+    }
+
+    @Test
+    void documentStatusSupportsExpectedPhaseOneStates() {
+        assertEquals(
+            List.of("UPLOADED", "PARSED", "CHUNKED", "FAILED"),
+            List.of(DocumentStatus.values()).stream().map(DocumentStatus::name).toList());
     }
 
     private static void assertTableName(Class<?> type, String expectedValue) {

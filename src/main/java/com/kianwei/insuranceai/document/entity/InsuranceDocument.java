@@ -41,8 +41,8 @@ public class InsuranceDocument {
     @TableField("checksum_sha256")
     private String checksumSha256;
 
-    @TableField("processing_status")
-    private String processingStatus;
+    @TableField("status")
+    private DocumentStatus status;
 
     @TableField("uploaded_at")
     private LocalDateTime uploadedAt;

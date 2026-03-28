@@ -26,20 +26,20 @@ public class InsuranceChunk {
     @TableField("page_id")
     private Long pageId;
 
+    @TableField("page_no")
+    private Integer pageNo;
+
     @TableField("chunk_index")
     private Integer chunkIndex;
 
     @TableField("content")
     private String content;
 
-    @TableField("char_start")
-    private Integer charStart;
-
-    @TableField("char_end")
-    private Integer charEnd;
-
     @TableField("token_count")
     private Integer tokenCount;
+
+    @TableField("embedding")
+    private String embedding;
 
     @TableField("created_at")
     private LocalDateTime createdAt;

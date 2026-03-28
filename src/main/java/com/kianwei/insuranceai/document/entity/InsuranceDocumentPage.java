@@ -23,8 +23,8 @@ public class InsuranceDocumentPage {
     @TableField("document_id")
     private Long documentId;
 
-    @TableField("page_number")
-    private Integer pageNumber;
+    @TableField("page_no")
+    private Integer pageNo;
 
     @TableField("storage_key")
     private String storageKey;
