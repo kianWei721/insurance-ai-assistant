@@ -26,12 +26,16 @@ public class InsuranceDocumentService {
     public DocumentUploadResponse buildUploadStubResponse(String documentType, MultipartFile file) {
         return DocumentUploadResponse.builder()
             .sourceFilename(resolveSourceFilename(file))
-            .documentType(documentType.trim())
+            .documentType(normalizeDocumentType(documentType))
             .mimeType(file.getContentType())
             .fileSizeBytes(file.getSize())
             .status(DocumentStatus.UPLOADED)
             .uploadedAt(LocalDateTime.now())
             .build();
+    }
+
+    private String normalizeDocumentType(String documentType) {
+        return documentType == null ? "" : documentType.strip();
     }
 
     private String resolveSourceFilename(MultipartFile file) {
