@@ -3,7 +3,7 @@ package com.kianwei.insuranceai.document.controller;
 import com.kianwei.insuranceai.common.result.Result;
 import com.kianwei.insuranceai.common.result.ResultCode;
 import com.kianwei.insuranceai.document.dto.DocumentUploadResponse;
-import com.kianwei.insuranceai.document.service.InsuranceDocumentService;
+import com.kianwei.insuranceai.orchestrator.DocumentOrchestratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/documents")
 public class DocumentController {
 
-    private final InsuranceDocumentService insuranceDocumentService;
+    private final DocumentOrchestratorService documentOrchestratorService;
 
     /**
      * Accept an upload request and return the normalized document metadata that
@@ -52,6 +52,6 @@ public class DocumentController {
 
         return Result.success(
             "Document upload stub accepted. Persistence and downstream processing are not implemented yet.",
-            insuranceDocumentService.buildUploadStubResponse(documentType, file));
+            documentOrchestratorService.handleUpload(documentType, file));
     }
 }
